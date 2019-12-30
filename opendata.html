@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/all.min.css">
+    <link rel="stylesheet" href="/css/coffee.css">
+    <link rel="stylesheet" href="./css/animate.css">
+    <style>
+        table {
+            margin: auto;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        td {
+            width: 110px;
+            height: 30px;
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">Currency wars</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="opendata.html">Currency Exchange</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <!-- 彈出視窗 新台幣-->
+    <div class="modal fade" id="tw" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">新台幣歷史匯率</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="opendata.php" method="post">
+                        <div style="width: 450px; height: 300px;">
+                            <canvas id="linechartTw"></canvas>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 彈出視窗 人民幣-->
+    <div class="modal fade" id="china" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">人民幣歷史匯率</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="opendata.php" method="post">
+                        <div style="width: 450px; height: 300px;">
+                            <canvas id="linechartChina"></canvas>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 彈出視窗 日圓-->
+    <div class="modal fade" id="jp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">日圓歷史匯率</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="opendata.php" method="post">
+                        <div style="width: 450px; height: 300px;">
+                            <canvas id="linechartJp"></canvas>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 彈出視窗 韓元-->
+    <div class="modal fade" id="korea" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">韓元歷史匯率</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="opendata.php" method="post">
+                        <div style="width: 450px; height: 300px;">
+                            <canvas id="linechartKorea"></canvas>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 彈出視窗 新加坡元-->
+    <div class="modal fade" id="sp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">新加坡元歷史匯率</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="opendata.php" method="post">
+                        <div style="width: 450px; height: 300px;">
+                            <canvas id="linechartSp"></canvas>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 彈出視窗 歐元-->
+    <div class="modal fade" id="eu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">歐元歷史匯率</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="opendata.php" method="post">
+                        <div style="width: 450px; height: 300px;">
+                            <canvas id="linechartEu"></canvas>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 彈出視窗 英鎊-->
+    <div class="modal fade" id="uk" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">英鎊歷史匯率</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="opendata.php" method="post">
+                        <div style="width: 450px; height: 300px;">
+                            <canvas id="linechartUk"></canvas>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 彈出視窗 澳幣-->
+    <div class="modal fade" id="aus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">澳幣歷史匯率</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="opendata.php" method="post">
+                        <div style="width: 450px; height: 300px;">
+                            <canvas id="linechartAus"></canvas>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="./js/Chart.min.js"></script>
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/wow.min.js"></script>
+    <script>
+
+
+        // let str=`<span>${data[i]}</span>`
+        $.get("opendata.php", function (res) {
+            // console.log(res)
+            $("#table").html(res)
+        })
+
+        $.get("opendata copy.php", function (ress) {
+            data = JSON.parse(ress);
+            // console.log(data) 
+            // console.log(data.result.records[0].月別) 
+
+            let line = $("#linechartTw");
+            let myLineChart = new Chart(line, {
+                type: "line",
+                data: {
+                    labels: [
+                        data.result.records[0].月別,
+                        data['result']['records'][1]['月別'],
+                        data['result']['records'][2]['月別'],
+                        data['result']['records'][3]['月別'],
+                        data['result']['records'][4]['月別'],
+                        data['result']['records'][5]['月別'],
+                        data['result']['records'][6]['月別'],
+                        data['result']['records'][7]['月別'],
+                        data['result']['records'][8]['月別'],
+                        data['result']['records'][9]['月別'],
+                        data['result']['records'][10]['月別'],
+                        data['result']['records'][11]['月別'],
+                        data['result']['records'][12]['月別'],
+                    ],
+                    datasets: [
+                        {
+                            label: "新台幣",
+                            data: [
+                                data['result']['records'][0]['新台幣'],
+                                data['result']['records'][1]['新台幣'],
+                                data['result']['records'][2]['新台幣'],
+                                data['result']['records'][3]['新台幣'],
+                                data['result']['records'][4]['新台幣'],
+                                data['result']['records'][5]['新台幣'],
+                                data['result']['records'][6]['新台幣'],
+                                data['result']['records'][7]['新台幣'],
+                                data['result']['records'][8]['新台幣'],
+                                data['result']['records'][9]['新台幣'],
+                                data['result']['records'][10]['新台幣'],
+                                data['result']['records'][11]['新台幣'],
+                                data['result']['records'][12]['新台幣'],
+                            ],
+                            borderColor: "#f00",
+                            backgroundColor: "#00f",
+                            fill: false,
+                            borderWidth: 5,
+                            lineTension: 0
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        text: "台灣歷史匯率",
+                        display: true
+                    }
+                }
+            })
+
+        })
+
+        $.get("opendata copy.php", function (ress) {
+            data = JSON.parse(ress);
+            // console.log(data) 
+            // console.log(data.result.records[0].月別) 
+
+            let line = $("#linechartChina");
+            let myLineChart = new Chart(line, {
+                type: "line",
+                data: {
+                    labels: [
+                        data.result.records[0].月別,
+                        data['result']['records'][1]['月別'],
+                        data['result']['records'][2]['月別'],
+                        data['result']['records'][3]['月別'],
+                        data['result']['records'][4]['月別'],
+                        data['result']['records'][5]['月別'],
+                        data['result']['records'][6]['月別'],
+                        data['result']['records'][7]['月別'],
+                        data['result']['records'][8]['月別'],
+                        data['result']['records'][9]['月別'],
+                        data['result']['records'][10]['月別'],
+                        data['result']['records'][11]['月別'],
+                        data['result']['records'][12]['月別'],
+                    ],
+                    datasets: [
+                        {
+                            label: "人民幣",
+                            data: [
+                                data['result']['records'][0]['人民幣'],
+                                data['result']['records'][1]['人民幣'],
+                                data['result']['records'][2]['人民幣'],
+                                data['result']['records'][3]['人民幣'],
+                                data['result']['records'][4]['人民幣'],
+                                data['result']['records'][5]['人民幣'],
+                                data['result']['records'][6]['人民幣'],
+                                data['result']['records'][7]['人民幣'],
+                                data['result']['records'][8]['人民幣'],
+                                data['result']['records'][9]['人民幣'],
+                                data['result']['records'][10]['人民幣'],
+                                data['result']['records'][11]['人民幣'],
+                                data['result']['records'][12]['人民幣'],
+                            ],
+                            borderColor: "#f00",
+                            backgroundColor: "#00f",
+                            fill: false,
+                            borderWidth: 5,
+                            lineTension: 0
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        text: "中國大陸歷史匯率",
+                        display: true
+                    }
+                }
+            })
+
+        })
+        $.get("opendata copy.php", function (ress) {
+            data = JSON.parse(ress);
+            // console.log(data) 
+            // console.log(data.result.records[0].月別) 
+
+            let line = $("#linechartJp");
+            let myLineChart = new Chart(line, {
+                type: "line",
+                data: {
+                    labels: [
+                        data.result.records[0].月別,
+                        data['result']['records'][1]['月別'],
+                        data['result']['records'][2]['月別'],
+                        data['result']['records'][3]['月別'],
+                        data['result']['records'][4]['月別'],
+                        data['result']['records'][5]['月別'],
+                        data['result']['records'][6]['月別'],
+                        data['result']['records'][7]['月別'],
+                        data['result']['records'][8]['月別'],
+                        data['result']['records'][9]['月別'],
+                        data['result']['records'][10]['月別'],
+                        data['result']['records'][11]['月別'],
+                        data['result']['records'][12]['月別'],
+                    ],
+                    datasets: [
+                        {
+                            label: "日圓",
+                            data: [
+                                data['result']['records'][0]['日圓'],
+                                data['result']['records'][1]['日圓'],
+                                data['result']['records'][2]['日圓'],
+                                data['result']['records'][3]['日圓'],
+                                data['result']['records'][4]['日圓'],
+                                data['result']['records'][5]['日圓'],
+                                data['result']['records'][6]['日圓'],
+                                data['result']['records'][7]['日圓'],
+                                data['result']['records'][8]['日圓'],
+                                data['result']['records'][9]['日圓'],
+                                data['result']['records'][10]['日圓'],
+                                data['result']['records'][11]['日圓'],
+                                data['result']['records'][12]['日圓'],
+                            ],
+                            borderColor: "#f00",
+                            backgroundColor: "#00f",
+                            fill: false,
+                            borderWidth: 5,
+                            lineTension: 0
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        text: "日本歷史匯率",
+                        display: true
+                    }
+                }
+            })
+
+        })
+        $.get("opendata copy.php", function (ress) {
+            data = JSON.parse(ress);
+            // console.log(data) 
+            // console.log(data.result.records[0].月別) 
+
+            let line = $("#linechartKorea");
+            let myLineChart = new Chart(line, {
+                type: "line",
+                data: {
+                    labels: [
+                        data.result.records[0].月別,
+                        data['result']['records'][1]['月別'],
+                        data['result']['records'][2]['月別'],
+                        data['result']['records'][3]['月別'],
+                        data['result']['records'][4]['月別'],
+                        data['result']['records'][5]['月別'],
+                        data['result']['records'][6]['月別'],
+                        data['result']['records'][7]['月別'],
+                        data['result']['records'][8]['月別'],
+                        data['result']['records'][9]['月別'],
+                        data['result']['records'][10]['月別'],
+                        data['result']['records'][11]['月別'],
+                        data['result']['records'][12]['月別'],
+                    ],
+                    datasets: [
+                        {
+                            label: "韓元",
+                            data: [
+                                data['result']['records'][0]['韓元'],
+                                data['result']['records'][1]['韓元'],
+                                data['result']['records'][2]['韓元'],
+                                data['result']['records'][3]['韓元'],
+                                data['result']['records'][4]['韓元'],
+                                data['result']['records'][5]['韓元'],
+                                data['result']['records'][6]['韓元'],
+                                data['result']['records'][7]['韓元'],
+                                data['result']['records'][8]['韓元'],
+                                data['result']['records'][9]['韓元'],
+                                data['result']['records'][10]['韓元'],
+                                data['result']['records'][11]['韓元'],
+                                data['result']['records'][12]['韓元'],
+                            ],
+                            borderColor: "#f00",
+                            backgroundColor: "#00f",
+                            fill: false,
+                            borderWidth: 5,
+                            lineTension: 0
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        text: "韓國歷史匯率",
+                        display: true
+                    }
+                }
+            })
+
+        })
+        $.get("opendata copy.php", function (ress) {
+            data = JSON.parse(ress);
+            // console.log(data) 
+            // console.log(data.result.records[0].月別) 
+
+            let line = $("#linechartSp");
+            let myLineChart = new Chart(line, {
+                type: "line",
+                data: {
+                    labels: [
+                        data.result.records[0].月別,
+                        data['result']['records'][1]['月別'],
+                        data['result']['records'][2]['月別'],
+                        data['result']['records'][3]['月別'],
+                        data['result']['records'][4]['月別'],
+                        data['result']['records'][5]['月別'],
+                        data['result']['records'][6]['月別'],
+                        data['result']['records'][7]['月別'],
+                        data['result']['records'][8]['月別'],
+                        data['result']['records'][9]['月別'],
+                        data['result']['records'][10]['月別'],
+                        data['result']['records'][11]['月別'],
+                        data['result']['records'][12]['月別'],
+                    ],
+                    datasets: [
+                        {
+                            label: "新加坡元",
+                            data: [
+                                data['result']['records'][0]['新加坡元'],
+                                data['result']['records'][1]['新加坡元'],
+                                data['result']['records'][2]['新加坡元'],
+                                data['result']['records'][3]['新加坡元'],
+                                data['result']['records'][4]['新加坡元'],
+                                data['result']['records'][5]['新加坡元'],
+                                data['result']['records'][6]['新加坡元'],
+                                data['result']['records'][7]['新加坡元'],
+                                data['result']['records'][8]['新加坡元'],
+                                data['result']['records'][9]['新加坡元'],
+                                data['result']['records'][10]['新加坡元'],
+                                data['result']['records'][11]['新加坡元'],
+                                data['result']['records'][12]['新加坡元'],
+                            ],
+                            borderColor: "#f00",
+                            backgroundColor: "#00f",
+                            fill: false,
+                            borderWidth: 5,
+                            lineTension: 0
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        text: "新加坡歷史匯率",
+                        display: true
+                    }
+                }
+            })
+
+        })
+        $.get("opendata copy.php", function (ress) {
+            data = JSON.parse(ress);
+            // console.log(data) 
+            // console.log(data.result.records[0].月別) 
+
+            let line = $("#linechartEu");
+            let myLineChart = new Chart(line, {
+                type: "line",
+                data: {
+                    labels: [
+                        data.result.records[0].月別,
+                        data['result']['records'][1]['月別'],
+                        data['result']['records'][2]['月別'],
+                        data['result']['records'][3]['月別'],
+                        data['result']['records'][4]['月別'],
+                        data['result']['records'][5]['月別'],
+                        data['result']['records'][6]['月別'],
+                        data['result']['records'][7]['月別'],
+                        data['result']['records'][8]['月別'],
+                        data['result']['records'][9]['月別'],
+                        data['result']['records'][10]['月別'],
+                        data['result']['records'][11]['月別'],
+                        data['result']['records'][12]['月別'],
+                    ],
+                    datasets: [
+                        {
+                            label: "歐元",
+                            data: [
+                                data['result']['records'][0]['歐元'],
+                                data['result']['records'][1]['歐元'],
+                                data['result']['records'][2]['歐元'],
+                                data['result']['records'][3]['歐元'],
+                                data['result']['records'][4]['歐元'],
+                                data['result']['records'][5]['歐元'],
+                                data['result']['records'][6]['歐元'],
+                                data['result']['records'][7]['歐元'],
+                                data['result']['records'][8]['歐元'],
+                                data['result']['records'][9]['歐元'],
+                                data['result']['records'][10]['歐元'],
+                                data['result']['records'][11]['歐元'],
+                                data['result']['records'][12]['歐元'],
+                            ],
+                            borderColor: "#f00",
+                            backgroundColor: "#00f",
+                            fill: false,
+                            borderWidth: 5,
+                            lineTension: 0
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        text: "歐盟歷史匯率",
+                        display: true
+                    }
+                }
+            })
+
+        })
+        $.get("opendata copy.php", function (ress) {
+            data = JSON.parse(ress);
+            // console.log(data) 
+            // console.log(data.result.records[0].月別) 
+
+            let line = $("#linechartUk");
+            let myLineChart = new Chart(line, {
+                type: "line",
+                data: {
+                    labels: [
+                        data.result.records[0].月別,
+                        data['result']['records'][1]['月別'],
+                        data['result']['records'][2]['月別'],
+                        data['result']['records'][3]['月別'],
+                        data['result']['records'][4]['月別'],
+                        data['result']['records'][5]['月別'],
+                        data['result']['records'][6]['月別'],
+                        data['result']['records'][7]['月別'],
+                        data['result']['records'][8]['月別'],
+                        data['result']['records'][9]['月別'],
+                        data['result']['records'][10]['月別'],
+                        data['result']['records'][11]['月別'],
+                        data['result']['records'][12]['月別'],
+                    ],
+                    datasets: [
+                        {
+                            label: "英鎊",
+                            data: [
+                                data['result']['records'][0]['英鎊'],
+                                data['result']['records'][1]['英鎊'],
+                                data['result']['records'][2]['英鎊'],
+                                data['result']['records'][3]['英鎊'],
+                                data['result']['records'][4]['英鎊'],
+                                data['result']['records'][5]['英鎊'],
+                                data['result']['records'][6]['英鎊'],
+                                data['result']['records'][7]['英鎊'],
+                                data['result']['records'][8]['英鎊'],
+                                data['result']['records'][9]['英鎊'],
+                                data['result']['records'][10]['英鎊'],
+                                data['result']['records'][11]['英鎊'],
+                                data['result']['records'][12]['英鎊'],
+                            ],
+                            borderColor: "#f00",
+                            backgroundColor: "#00f",
+                            fill: false,
+                            borderWidth: 5,
+                            lineTension: 0
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        text: "英國歷史匯率",
+                        display: true
+                    }
+                }
+            })
+
+        })
+        $.get("opendata copy.php", function (ress) {
+            data = JSON.parse(ress);
+            // console.log(data) 
+            // console.log(data.result.records[0].月別) 
+
+            let line = $("#linechartAus");
+            let myLineChart = new Chart(line, {
+                type: "line",
+                data: {
+                    labels: [
+                        data.result.records[0].月別,
+                        data['result']['records'][1]['月別'],
+                        data['result']['records'][2]['月別'],
+                        data['result']['records'][3]['月別'],
+                        data['result']['records'][4]['月別'],
+                        data['result']['records'][5]['月別'],
+                        data['result']['records'][6]['月別'],
+                        data['result']['records'][7]['月別'],
+                        data['result']['records'][8]['月別'],
+                        data['result']['records'][9]['月別'],
+                        data['result']['records'][10]['月別'],
+                        data['result']['records'][11]['月別'],
+                        data['result']['records'][12]['月別'],
+                    ],
+                    datasets: [
+                        {
+                            label: "澳幣",
+                            data: [
+                                data['result']['records'][0]['澳幣'],
+                                data['result']['records'][1]['澳幣'],
+                                data['result']['records'][2]['澳幣'],
+                                data['result']['records'][3]['澳幣'],
+                                data['result']['records'][4]['澳幣'],
+                                data['result']['records'][5]['澳幣'],
+                                data['result']['records'][6]['澳幣'],
+                                data['result']['records'][7]['澳幣'],
+                                data['result']['records'][8]['澳幣'],
+                                data['result']['records'][9]['澳幣'],
+                                data['result']['records'][10]['澳幣'],
+                                data['result']['records'][11]['澳幣'],
+                                data['result']['records'][12]['澳幣'],
+                            ],
+                            borderColor: "#f00",
+                            backgroundColor: "#00f",
+                            fill: false,
+                            borderWidth: 5,
+                            lineTension: 0
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        text: "澳洲歷史匯率",
+                        display: true
+                    }
+                }
+            })
+
+        })
+
+    </script>
+    <table id="table"></table>
+
+</body>
+
+</html>

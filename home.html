@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/all.min.css">
+    <link rel="stylesheet" href="./css/animate.css">
+    <link rel="stylesheet" href="./css/jsfinal.css">
+    <style>
+        body {
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(./images/Karl_Marx.jpg);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        img {
+            /* transform-origin: 50px 50px; */
+            transform: rotateY(0deg);
+            animation: 1.11111s linear -1.11111s infinite normal forwards running flip-h-45319ea5-2954-4450-b3c1-adfda1cc0fc9;
+            animation-duration: 1.11111s;
+            animation-timing-function: linear;
+            animation-delay: -1.11111s;
+            animation-iteration-count: infinite;
+            animation-direction: normal;
+            animation-fill-mode: forwards;
+            animation-play-state: running;
+            animation-name: flip-h-45319ea5-2954-4450-b3c1-adfda1cc0fc9;
+        }
+
+        @keyframes flip-h-45319ea5-2954-4450-b3c1-adfda1cc0fc9 {
+            0% {
+                animation-timing-function: cubic-bezier(0.1909, 0.4373, 0.4509, 0.7454);
+                transform: rotateY(0deg);
+            }
+
+            30% {
+                animation-timing-function: cubic-bezier(0.128, 0.2315, 0.9704, 0.8632);
+                transform: rotateY(153.72deg);
+            }
+
+            50% {
+                animation-timing-function: cubic-bezier(0.5788, 0.3001, 0.5613, 0.6784);
+                transform: rotateY(180deg);
+            }
+
+            55% {
+                animation-timing-function: cubic-bezier(0.1545, 0.4929, 0.6089, 0.9373);
+                transform: rotateY(238.68deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">Currency wars</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="opendata.html">Currency Exchange</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container-fluid" id="loading">
+        <div class="row h-100">
+            <div class="col-12 align-self-center text-center">
+                <img src="./images/loading.svg" alt="">
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row text-white">
+          <div class="d-flex col-12 text-center align-self-center justify-content-center" id="h1">
+            貨幣的職能存在可以說吞掉了它的物質存在。貨幣作為商品價格的轉瞬即逝的客觀反映，</br>
+            只是當作它自己的符號來執行職能，因此也能夠由符號來代替。
+          </div>
+          <div class="d-flex col-12 text-center align-self-center justify-content-center" id="h2">
+            ——[德國]馬克思《資本論》
+          </div>
+        </div>
+      </div>
+    
+    <script src="./js/Chart.min.js"></script>
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/wow.min.js"></script>
+    <script>
+        $(window).on('load', function () {
+            $("#loading").fadeOut(2000, function () {
+                $("#content").fadeIn();
+                $("#footer").fadeIn();
+            })
+        })
+        new WOW().init()
+    </script>
+
+</body>
+
+</html>
